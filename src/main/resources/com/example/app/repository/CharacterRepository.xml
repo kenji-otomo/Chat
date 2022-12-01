@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.example.app.repository.CharacterRepository">
+
+	<resultMap id="characterMap" type="com.example.app.domain.Character">
+		<id		property="id"				column="id" />
+		<result	property="name"				column="name" />
+		<result	property="createdTime"		column="created_time" />
+		<result	property="updatedTime"		column="updated_time" />
+		<result	property="deleted"			column="deleted" />
+	</resultMap>
+
+	<select id="selectCharacterById" resultMap="characterMap">
+		SELECT 
+		 id
+		 ,name
+		 ,created_time
+		 ,updated_time
+		 ,deleted
+		FROM 
+		 s 
+		WHERE 
+		 id = #{id}
+		AND 
+		 deleted = false;
+	</select>
+
+	<insert id="insertCharacter" useGeneratedKeys="true" keyProperty="id">
+		INSERT 
+		INTO
+		 s 
+		 (name
+		 ,created_time
+		 ,updated_time
+		 ,deleted
+		 )
+		VALUES
+		 (#{name}
+		 ,now()
+		 ,now()
+		 ,false)
+	</insert>
+</mapper>

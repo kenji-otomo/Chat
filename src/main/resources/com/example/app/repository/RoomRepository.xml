@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.example.app.repository.RoomRepository">
+
+	<resultMap id="roomMap" type="com.example.app.domain.Room">
+		<id		property="id"				column="id" />
+		<result	property="name"				column="name" />
+		<result	property="isDm"				column="is_dm" />
+		<result	property="photoPath"		column="photo_path" />
+		<result	property="createdTime"		column="created_time" />
+		<result	property="updatedTime"		column="updated_time" />
+		<result	property="deleted"			column="deleted" />
+	</resultMap>
+
+	<select id="searchRoomById" resultMap="roomMap">
+		SELECT 
+		 id
+		 ,name
+		 ,is_dm
+		 ,photo_path
+		 ,created_time
+		 ,updated_time
+		 ,deleted
+		FROM 
+		 rooms 
+		WHERE 
+		 id = #{id}
+		AND 
+		 deleted = false;
+	</select>
+
+	<insert id="insertRoom" useGeneratedKeys="true" keyProperty="id">
+		INSERT 
+		INTO
+		 rooms 
+		 (name
+		 ,is_dm
+		 ,photo_path
+		 ,created_time
+		 ,updated_time
+		 ,deleted
+		 )
+		VALUES
+		 (#{name}
+		 #{isDm}
+		 #{photoPath}
+		 ,now()
+		 ,now()
+		 ,false)
+	</insert>
+</mapper>
